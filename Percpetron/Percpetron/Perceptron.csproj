@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActivationFunction.cs" />
+    <Compile Include="Helper.cs" />
     <Compile Include="MLP.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="NotReadyException.cs" />

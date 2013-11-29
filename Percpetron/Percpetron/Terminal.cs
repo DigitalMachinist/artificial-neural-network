@@ -13,8 +13,6 @@ namespace Perceptron
 		public const float	WEIGHT_MAX_INITIAL	=  0.5f;
 		public const float	WEIGHT_MIN_INITIAL	= -0.5f;
 
-		private static Random sRandom;
-
 		private Node	__input;
 		private Node	__output;
 		private float	__value;
@@ -23,14 +21,6 @@ namespace Perceptron
 		#endregion
 
 		#region Initialization
-
-		public Terminal( Terminal clone )
-		{
-			Input = clone.Input;
-			Output = clone.Output;
-			Value = clone.Value;
-			Weight = clone.Weight;
-		}
 		
 		public Terminal( Node input, Node output, float value, float weight )
 		{
@@ -45,7 +35,15 @@ namespace Perceptron
 			Input = input;
 			Output = output;
 			Value = 0f;
-			Weight = GetRandomWeight( WEIGHT_MIN_INITIAL, WEIGHT_MAX_INITIAL );
+			Weight = Helper.Random( WEIGHT_MIN_INITIAL, WEIGHT_MAX_INITIAL );
+		}
+
+		public Terminal( Terminal clone )
+		{
+			Input = clone.Input;
+			Output = clone.Output;
+			Value = clone.Value;
+			Weight = clone.Weight;
 		}
 		
 		public Terminal()
@@ -53,16 +51,7 @@ namespace Perceptron
 			Input = null;
 			Output = null;
 			Value = 0f;
-			Weight = GetRandomWeight( WEIGHT_MIN_INITIAL, WEIGHT_MAX_INITIAL );
-		}
-
-		#endregion
-
-		#region Methods
-
-		private float GetRandomWeight( float min, float max )
-		{
-			return (float)( ( max - min ) * sRandom.NextDouble() - min );
+			Weight = Helper.Random( WEIGHT_MIN_INITIAL, WEIGHT_MAX_INITIAL );
 		}
 
 		#endregion
@@ -87,13 +76,9 @@ namespace Perceptron
 			set
 			{
 				if ( value > VALUE_MAX || value < VALUE_MIN )
-				{
 					throw new ArgumentOutOfRangeException( "Value must be bounded [" + VALUE_MIN + ", " + VALUE_MAX + "]!" );
-				}
-				else
-				{
-					__value = value;
-				}
+				
+				__value = value;
 			}
 		}
 
@@ -103,13 +88,9 @@ namespace Perceptron
 			set
 			{
 				if ( value > WEIGHT_MAX || value < WEIGHT_MIN )
-				{
 					throw new ArgumentOutOfRangeException( "Weight must be bounded [" + WEIGHT_MIN + ", " + WEIGHT_MAX + "]!" );
-				}
-				else
-				{
-					__weight = value;
-				}
+				
+				__weight = value;
 			}
 		}
 

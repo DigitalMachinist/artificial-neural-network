@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Percpetron", "Percpetron\Percpetron.csproj", "{6264BC3F-8B4D-4E14-9844-9CB5C2CCE49B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Perceptron", "Percpetron\Perceptron.csproj", "{6264BC3F-8B4D-4E14-9844-9CB5C2CCE49B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerceptronTesting", "PerceptronTesting\PerceptronTesting.csproj", "{90E2771B-A27C-4241-8193-CA5E3D490A71}"
 EndProject

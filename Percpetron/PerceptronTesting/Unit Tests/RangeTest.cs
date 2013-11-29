@@ -132,7 +132,7 @@ namespace PerceptronTesting
 		}
 
 		/// <summary>
-		/// Value setter correctly sets Value
+		/// Value setter correctly sets Value if Value is in-range.
 		/// </summary>
 		[TestMethod]
 		public void SetValueInRange()
@@ -165,7 +165,7 @@ namespace PerceptronTesting
 		}
 
 		/// <summary>
-		/// NormalizedValue setter correctly sets Value
+		/// NormalizedValue setter correctly sets Value if NormalizedValue is in-range.
 		/// </summary>
 		[TestMethod]
 		public void SetNormalizedValueInRange()
