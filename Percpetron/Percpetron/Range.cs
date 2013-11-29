@@ -16,16 +16,16 @@ namespace Perceptron
 
 		public Range( float minValue, float maxValue, float value )
 		{
-			__maxValue = maxValue;
-			__minValue = minValue;
-			__value = value;
+			MaxValue = maxValue;
+			MinValue = minValue;
+			Value = value;
 		}
 
 		public Range()
 		{
-			__maxValue = 1f;
-			__minValue = 0f;
-			__value = 0f;
+			MaxValue = 1f;
+			MinValue = 0f;
+			Value = 0f;
 		}
 
 		#endregion
@@ -35,13 +35,29 @@ namespace Perceptron
 		public float MaxValue
 		{
 			get { return __maxValue; }
-			set { __maxValue = value; }
+			set
+			{
+				// Set the new maximum
+				__maxValue = value;
+
+				// Force the value to the new maximum if it's out of range
+				if ( __maxValue < __value )
+					__value = value;
+			}
 		}
 
 		public float MinValue
 		{
 			get { return __minValue; }
-			set { __minValue = value; }
+			set
+			{
+				// Set the new minimum
+				__minValue = value;
+
+				// Force the value to the new minimum if it's out of range
+				if ( __minValue > __value )
+					__value = value;
+			}
 		}
 
 		public float Value
@@ -50,32 +66,16 @@ namespace Perceptron
 			set
 			{
 				if ( value > __maxValue || value < __minValue )
-				{
 					throw new ArgumentOutOfRangeException( "Value out of range for the defined bounds [" + MinValue + ", " + MaxValue + "]!" );
-				}
-				else
-				{
-					__value = value;
-				}
+				
+				__value = value;
 			}
 		}
 
 		public float NormalizedValue
 		{
 			get { return ( __value - __minValue ) / ( __maxValue - __minValue ); }
-			set
-			{
-				float result = ( __maxValue - __minValue ) * value + __minValue;
-				
-				if ( result > __maxValue || result < __minValue )
-				{
-					throw new ArgumentOutOfRangeException( "Value out of range for the defined bounds [" + MinValue + ", " + MaxValue + "]!" );
-				}
-				else
-				{
-					__value = result;
-				}
-			}
+			set { Value = ( __maxValue - __minValue ) * value + __minValue; }
 		}
 
 		#endregion
