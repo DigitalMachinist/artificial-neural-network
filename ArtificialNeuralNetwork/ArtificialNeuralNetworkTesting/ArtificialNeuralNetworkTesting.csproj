@@ -6,8 +6,8 @@
     <ProjectGuid>{90E2771B-A27C-4241-8193-CA5E3D490A71}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PerceptronTesting</RootNamespace>
-    <AssemblyName>PerceptronTesting</AssemblyName>
+    <RootNamespace>ArtificialNeuralNetworkTesting</RootNamespace>
+    <AssemblyName>ArtificialNeuralNetworkTesting</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -59,13 +59,10 @@
     <Compile Include="Unit Tests\PerceptronTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Percpetron\Perceptron.csproj">
+    <ProjectReference Include="..\ArtificialNeuralNetwork\ArtificialNeuralNetwork.csproj">
       <Project>{6264bc3f-8b4d-4e14-9844-9cb5c2cce49b}</Project>
-      <Name>Perceptron</Name>
+      <Name>ArtificialNeuralNetwork</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Integration Tests\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

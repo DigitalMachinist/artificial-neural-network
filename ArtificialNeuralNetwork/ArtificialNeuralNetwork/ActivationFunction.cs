@@ -1,6 +1,6 @@
 ﻿
 
-namespace Perceptron
+namespace ArtificialNeuralNetwork
 {
 	public enum ActivationFunction
 	{

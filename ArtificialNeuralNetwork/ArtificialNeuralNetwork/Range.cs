@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Perceptron
+namespace ArtificialNeuralNetwork
 {
 	public class Range
 	{
@@ -14,18 +14,24 @@ namespace Perceptron
 
 		#region Initialization
 
-		public Range( float minValue, float maxValue, float value )
+		public void Init( float minValue, float maxValue, float value )
 		{
+			if ( value < minValue || value > maxValue )
+				throw new ArgumentOutOfRangeException( "Initial setting for value is out of range!" );
+
 			MaxValue = maxValue;
 			MinValue = minValue;
 			Value = value;
 		}
 
+		public Range( float minValue, float maxValue, float value )
+		{
+			Init( minValue, maxValue, value );
+		}
+
 		public Range()
 		{
-			MaxValue = 1f;
-			MinValue = 0f;
-			Value = 0f;
+			Init( 0f, 1f, 0f );
 		}
 
 		#endregion
@@ -42,7 +48,7 @@ namespace Perceptron
 
 				// Force the value to the new maximum if it's out of range
 				if ( __maxValue < __value )
-					__value = value;
+					Value = value;
 			}
 		}
 
@@ -56,7 +62,7 @@ namespace Perceptron
 
 				// Force the value to the new minimum if it's out of range
 				if ( __minValue > __value )
-					__value = value;
+					Value = value;
 			}
 		}
 
@@ -65,10 +71,19 @@ namespace Perceptron
 			get { return __value; }
 			set
 			{
-				if ( value > __maxValue || value < __minValue )
-					throw new ArgumentOutOfRangeException( "Value out of range for the defined bounds [" + MinValue + ", " + MaxValue + "]!" );
-				
-				__value = value;
+				// Clamp the value into the range [min, max]
+				if ( value < __minValue )
+				{
+					__value = __minValue;
+				}
+				else if ( value > __maxValue )
+				{
+					__value = __maxValue;
+				}
+				else
+				{
+					__value = value;
+				}
 			}
 		}
 

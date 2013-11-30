@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Perceptron
+namespace ArtificialNeuralNetwork
 {
 	public class NotReadyException : Exception
 	{

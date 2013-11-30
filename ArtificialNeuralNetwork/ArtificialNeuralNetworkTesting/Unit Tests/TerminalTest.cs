@@ -1,17 +1,52 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Perceptron;
+using ArtificialNeuralNetwork;
 
-namespace PerceptronTesting
+namespace ArtificialNeuralNetworkTesting
 {
 	[TestClass]
 	public class TerminalTest
 	{
 		/// <summary>
+		/// Init() configures the terminal correctly.
+		/// </summary>
+		[TestMethod]
+		public void TerminalInitInRange()
+		{
+			Node input = new Node();
+			Node output = new Node();
+			Terminal testTerminal = new Terminal( input, output, 0.5f, 0.1f );
+			Assert.AreSame( input, testTerminal.Input, "Unexpected Terminal.Input" );
+			Assert.AreSame( output, testTerminal.Output, "Unexpected Terminal.Output" );
+			Assert.AreEqual( 0.5f, testTerminal.Value, 0.001, "Unexpected Terminal.Value" );
+			Assert.AreEqual( 0.1f, testTerminal.Weight, 0.001, "Unexpected Terminal.Weight" );
+		}
+
+		/// <summary>
+		/// Init() throws ArgumentOutOfRangeException for out-of-range Value.
+		/// </summary>
+		[TestMethod]
+		[ExpectedException( typeof( ArgumentOutOfRangeException ) )]
+		public void TerminalInitValueOutOfRange()
+		{
+			Terminal testTerminal = new Terminal( new Node(), new Node(), 1.5f, 0.1f );
+		}
+
+		/// <summary>
+		/// Init() throws ArgumentOutOfRangeException for out-of-range Weight.
+		/// </summary>
+		[TestMethod]
+		[ExpectedException( typeof( ArgumentOutOfRangeException ) )]
+		public void TerminalInitWeightOutOfRange()
+		{
+			Terminal testTerminal = new Terminal( new Node(), new Node(), 0.5f, 1.1f );
+		}
+
+		/// <summary>
 		/// 4-Arg constructor instantiation sets variables correctly with in-range Value.
 		/// </summary>
 		[TestMethod]
-		public void Constructor4ArgsValueInRange()
+		public void TerminalConstructor4ArgsInRange()
 		{
 			Node input = new Node();
 			Node output = new Node();
@@ -27,7 +62,7 @@ namespace PerceptronTesting
 		/// </summary>
 		[TestMethod]
 		[ExpectedException( typeof( ArgumentOutOfRangeException ) )]
-		public void Constructor4ArgsValueOutOfRange()
+		public void TerminalConstructor4ArgsValueOutOfRange()
 		{
 			Terminal testTerminal = new Terminal( new Node(), new Node(), 1.5f, 0.1f );
 		}
@@ -37,7 +72,7 @@ namespace PerceptronTesting
 		/// </summary>
 		[TestMethod]
 		[ExpectedException( typeof( ArgumentOutOfRangeException ) )]
-		public void Constructor4ArgsWeightOutOfRange()
+		public void TerminalConstructor4ArgsWeightOutOfRange()
 		{
 			Terminal testTerminal = new Terminal( new Node(), new Node(), 0.5f, 1.1f );
 		}
@@ -46,7 +81,7 @@ namespace PerceptronTesting
 		/// 2-Arg constructor instantiation sets variables correctly.
 		/// </summary>
 		[TestMethod]
-		public void Constructor2Args()
+		public void TerminalConstructor2Args()
 		{
 			Node input = new Node();
 			Node output = new Node();
@@ -60,7 +95,7 @@ namespace PerceptronTesting
 		/// 1-Arg constructor instantiation sets variables correctly.
 		/// </summary>
 		[TestMethod]
-		public void Constructor1Arg()
+		public void TerminalConstructor1Arg()
 		{
 			Node input = new Node();
 			Node output = new Node();
@@ -76,7 +111,7 @@ namespace PerceptronTesting
 		/// 0-Arg constructor instantiation sets variables correctly.
 		/// </summary>
 		[TestMethod]
-		public void Constructor0Args()
+		public void TerminalConstructor0Args()
 		{
 			Terminal testTerminal = new Terminal();
 			Assert.AreSame( null, testTerminal.Input, "Unexpected Terminal.Input" );
@@ -88,7 +123,7 @@ namespace PerceptronTesting
 		/// Input getter property returns correctly.
 		/// </summary>
 		[TestMethod]
-		public void GetInput()
+		public void TerminalGetInput()
 		{
 			Node input = new Node();
 			Terminal testTerminal = new Terminal( input, new Node(), 0.5f, 0.1f );
@@ -99,7 +134,7 @@ namespace PerceptronTesting
 		/// Output getter property returns correctly.
 		/// </summary>
 		[TestMethod]
-		public void GetOutput()
+		public void TerminalGetOutput()
 		{
 			Node output = new Node();
 			Terminal testTerminal = new Terminal( new Node(), output, 0.5f, 0.1f );
@@ -110,7 +145,7 @@ namespace PerceptronTesting
 		/// Value getter property returns correctly.
 		/// </summary>
 		[TestMethod]
-		public void GetValue()
+		public void TerminalGetValue()
 		{
 			Terminal testTerminal = new Terminal( new Node(), new Node(), 0.5f, 0.1f );
 			Assert.AreEqual( 0.5f, testTerminal.Value, 0.001, "Unexpected Terminal.Value" );
@@ -120,7 +155,7 @@ namespace PerceptronTesting
 		/// Weight getter property returns correctly.
 		/// </summary>
 		[TestMethod]
-		public void GetWeight()
+		public void TerminalGetWeight()
 		{
 			Terminal testTerminal = new Terminal( new Node(), new Node(), 0.5f, 0.1f );
 			Assert.AreEqual( 0.1f, testTerminal.Weight, 0.001, "Unexpected Terminal.Weight" );
@@ -130,7 +165,7 @@ namespace PerceptronTesting
 		/// WeightedValue getter property returns correctly.
 		/// </summary>
 		[TestMethod]
-		public void GetWeightedValue()
+		public void TerminalGetWeightedValue()
 		{
 			Terminal testTerminal = new Terminal( new Node(), new Node(), 0.5f, 0.1f );
 			Assert.AreEqual( 0.05f, testTerminal.WeightedValue, 0.001, "Unexpected Terminal.WeightedValue" );
@@ -140,7 +175,7 @@ namespace PerceptronTesting
 		/// Input setter correctly sets Input.
 		/// </summary>
 		[TestMethod]
-		public void SetInput()
+		public void TerminalSetInput()
 		{
 			Terminal testTerminal = new Terminal( new Node(), new Node(), 0.5f, 0.1f );
 			Node input = new Node();
@@ -152,7 +187,7 @@ namespace PerceptronTesting
 		/// Output setter correctly sets Output.
 		/// </summary>
 		[TestMethod]
-		public void SetOutput()
+		public void TerminalSetOutput()
 		{
 			Terminal testTerminal = new Terminal( new Node(), new Node(), 0.5f, 0.1f );
 			Node output = new Node();
@@ -164,7 +199,7 @@ namespace PerceptronTesting
 		/// Value setter correctly sets Value if Value is in-range.
 		/// </summary>
 		[TestMethod]
-		public void SetValueInRange()
+		public void TerminalSetValueInRange()
 		{
 			Terminal testTerminal = new Terminal( new Node(), new Node(), 0.5f, 0.1f );
 			testTerminal.Value = 0.8f;
@@ -172,32 +207,32 @@ namespace PerceptronTesting
 		}
 
 		/// <summary>
-		/// Value setter throws an ArgumentOfRangeException when setting Value too low.
+		/// Value setter clamps Value at the minimum when attempting to set Value too low.
 		/// </summary>
 		[TestMethod]
-		[ExpectedException( typeof( ArgumentOutOfRangeException ) )]
-		public void SetValueOutOfRangeLow()
+		public void TerminalSetValueOutOfRangeLow()
 		{
 			Terminal testTerminal = new Terminal( new Node(), new Node(), 0.5f, 0.1f );
-			testTerminal.Value = -1.5f;
+			testTerminal.Value = -0.5f;
+			Assert.AreEqual( 0f, testTerminal.Value, "Unexpected Terminal.Value" );
 		}
 
 		/// <summary>
-		/// Value setter throws an ArgumentOfRangeException when setting Value too high.
+		/// Value setter clamps Value at the maximum when attempting to set Value too high.
 		/// </summary>
 		[TestMethod]
-		[ExpectedException( typeof( ArgumentOutOfRangeException ) )]
-		public void SetValueOutOfRangeHigh()
+		public void TerminalSetValueOutOfRangeHigh()
 		{
 		Terminal testTerminal = new Terminal( new Node(), new Node(), 0.5f, 0.1f );
 			testTerminal.Value = 1.5f;
+			Assert.AreEqual( 1f, testTerminal.Value, "Unexpected Terminal.Value" );
 		}
 
 		/// <summary>
 		/// Weight setter correctly sets Weight if Weight is in-range.
 		/// </summary>
 		[TestMethod]
-		public void SetWeightInRange()
+		public void TerminalSetWeightInRange()
 		{
 			Terminal testTerminal = new Terminal( new Node(), new Node(), 0.5f, 0.1f );
 			testTerminal.Weight = 0.3f;
@@ -208,22 +243,22 @@ namespace PerceptronTesting
 		/// Weight setter throws an ArgumentOfRangeException when setting Weight too low.
 		/// </summary>
 		[TestMethod]
-		[ExpectedException( typeof( ArgumentOutOfRangeException ) )]
-		public void SetWeightOutOfRangeLow()
+		public void TerminalSetWeightOutOfRangeLow()
 		{
 			Terminal testTerminal = new Terminal( new Node(), new Node(), 0.5f, 0.1f );
-			testTerminal.Weight = 1.1f;
+			testTerminal.Weight = -1.1f;
+			Assert.AreEqual( -1f, testTerminal.Weight, "Unexpected Terminal.Weight" );
 		}
 
 		/// <summary>
 		/// Weight setter throws an ArgumentOfRangeException when setting Weight too high.
 		/// </summary>
 		[TestMethod]
-		[ExpectedException( typeof( ArgumentOutOfRangeException ) )]
-		public void SetWeightOutOfRangeHigh()
+		public void TerminalSetWeightOutOfRangeHigh()
 		{
 			Terminal testTerminal = new Terminal( new Node(), new Node(), 0.5f, 0.1f );
-			testTerminal.Weight = -1.1f;
+			testTerminal.Weight = 1.1f;
+			Assert.AreEqual( 1f, testTerminal.Weight, "Unexpected Terminal.Weight" );
 		}
 	}
 }
