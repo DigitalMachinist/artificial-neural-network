@@ -1,4 +1,4 @@
-perceptron-testing
-==================
+artificial-neural-network
+=========================
 
-A demo project of a small perceptron artificial neural network framework for an AI class.
+A perceptron artificial neural network framework developed for credit in GAME510 (Artificial Intelligence) class at Humber College.
