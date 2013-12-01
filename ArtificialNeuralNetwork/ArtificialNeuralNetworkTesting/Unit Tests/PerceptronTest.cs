@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ArtificialNeuralNetwork;
 
-namespace PerceptronTesting
+namespace ArtificialNeuralNetworkTesting
 {
 	[TestClass]
 	public class PerceptronTest
