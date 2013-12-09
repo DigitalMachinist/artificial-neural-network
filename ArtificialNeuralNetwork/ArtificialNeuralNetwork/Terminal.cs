@@ -13,6 +13,7 @@ namespace ArtificialNeuralNetwork
 		public const float	WEIGHT_MAX_INITIAL	=  0.5f;
 		public const float	WEIGHT_MIN_INITIAL	= -0.5f;
 
+		private float	__error;
 		private Node	__input;
 		private Node	__output;
 		private float	__value;
@@ -29,6 +30,7 @@ namespace ArtificialNeuralNetwork
 			if ( weight > WEIGHT_MAX || weight < WEIGHT_MIN )
 				throw new ArgumentOutOfRangeException( "Weight must be bounded [" + WEIGHT_MIN + ", " + WEIGHT_MAX + "]!" );
 
+			Error = 0f;
 			Input = input;
 			Output = output;
 			Value = value;
@@ -58,6 +60,12 @@ namespace ArtificialNeuralNetwork
 		#endregion
 
 		#region Properties
+
+		public float Error
+		{
+			get { return __error; }
+			set { __error = value; }
+		}
 
 		public Node Input
 		{
@@ -121,6 +129,11 @@ namespace ArtificialNeuralNetwork
 					__weight = value;
 				}
 			}
+		}
+
+		public float WeightedError
+		{
+			get { return __weight * __error; }
 		}
 
 		public float WeightedValue

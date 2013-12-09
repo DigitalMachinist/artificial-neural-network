@@ -74,8 +74,8 @@ namespace ArtificialNeuralNetwork
 			__trainingMeanSquaredError = 10f * maxMeanSquaredError;
 			__trainingStep = trainingStep;
 
-			// Continue looping until the condition is met, increasing i but looping it inside the range [0, data.Length]
-			for ( int i = 0; __trainingMeanSquaredError > maxMeanSquaredError; i = ( i + 1 ) % data.Length )
+			// Continue training until the error is small enough
+			while ( __trainingMeanSquaredError > maxMeanSquaredError )
 			{
 				float squaredError = 0f;
 
@@ -89,7 +89,7 @@ namespace ArtificialNeuralNetwork
 					float error = data[ j ].Outputs[ 0 ] - __node.Outputs[ 0 ].Value;
 					squaredError += error * error;
 
-					AdjustNodeWeights( error, __trainingStep );
+					__node.AdjustInputWeights( error, __trainingStep );
 				}
 
 				__trainingMeanSquaredError = squaredError / data.Length;
@@ -114,12 +114,6 @@ namespace ArtificialNeuralNetwork
 
 			for ( int i = 0; i < __inputs.Length; i++ )
 				__inputs[ i ].Value = data.Inputs[ i ];
-		}
-
-		public void AdjustNodeWeights( float error, float trainingStep )
-		{
-			for ( int i = 0 ; i < __inputs.Length; i++ )
-				__node.Inputs[ i ].Weight = __node.Inputs[ i ].Weight + trainingStep * error * __node.Inputs[ i ].Value;
 		}
 
 		public void CopyInputsToNodeValues()

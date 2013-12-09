@@ -69,19 +69,34 @@ namespace ArtificialNeuralNetwork
 			if ( !__isReady ) 
 				throw new NotReadyException( "Init() must be called upon the node before it can be Cycle()d!" );
 
-			SetOutputValues( ComputeActivation( GetWeightedSumOfInputValues() ) + __biasValue );
+			SetOutputValues( ComputeActivation( GetSumOfWeightedInputValues() ) + __biasValue );
 		}
 
-		public float GetWeightedSumOfInputValues()
+		public float GetSumOfWeightedInputValues()
 		{
 			float result = 0f;
 
 			foreach ( Terminal input in __inputs )
 			{
 				if ( input == null )
-					throw new ArgumentNullException( "Input terminals must be non-null to sum input values!" );
+					throw new ArgumentNullException( "Input terminals must be non-null to sum weighted input values!" );
 				
 				result += input.WeightedValue;
+			}
+
+			return result;
+		}
+
+		public float GetSumOfWeightedOutputError()
+		{
+			float result = 0f;
+
+			foreach ( Terminal output in __outputs )
+			{
+				if ( output == null )
+					throw new ArgumentNullException( "Output terminals must be non-null to weighted sum output error!" );
+
+				result += output.WeightedError;
 			}
 
 			return result;
@@ -107,6 +122,12 @@ namespace ArtificialNeuralNetwork
 				
 				output.Value = value;
 			}
+		}
+
+		public void AdjustInputWeights( float error, float trainingStep )
+		{
+			for ( int i = 0 ; i < Inputs.Length; i++ )
+				Inputs[ i ].Weight += trainingStep * error * Inputs[ i ].Value;
 		}
 
 		#endregion

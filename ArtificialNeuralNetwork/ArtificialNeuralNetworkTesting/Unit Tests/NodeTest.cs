@@ -168,7 +168,7 @@ namespace ArtificialNeuralNetworkTesting
 			Node testNode = new Node( 2, 1, ActivationFunction.Sigmoid, 0.5f );
 			testNode.Inputs[ 0 ] = new Terminal( null, testNode, 0.75f, 1f );
 			testNode.Inputs[ 1 ] = new Terminal( null, testNode, 0.25f, 1f );
-			float test = testNode.GetWeightedSumOfInputValues();
+			float test = testNode.GetSumOfWeightedInputValues();
 			Assert.AreEqual( 1f, test, "Unexpected weighted sum result" );
 		}
 
@@ -180,7 +180,7 @@ namespace ArtificialNeuralNetworkTesting
 		public void NodeGetWeightedSumOfInputValuesNullInput()
 		{
 			Node testNode = new Node( 2, 1, ActivationFunction.Sigmoid, 0.5f );
-			float test = testNode.GetWeightedSumOfInputValues();
+			float test = testNode.GetSumOfWeightedInputValues();
 		}
 
 		/// <summary>
@@ -192,7 +192,7 @@ namespace ArtificialNeuralNetworkTesting
 			Node testNode = new Node( 2, 1, ActivationFunction.Threshold, 0f );
 			testNode.Inputs[ 0 ] = new Terminal( null, testNode, 1.0f,  1f );
 			testNode.Inputs[ 1 ] = new Terminal( null, testNode, 0.5f, -1f );
-			float test = testNode.ComputeActivation( testNode.GetWeightedSumOfInputValues() );
+			float test = testNode.ComputeActivation( testNode.GetSumOfWeightedInputValues() );
 			Assert.AreEqual( 1.0000f, test, 0.001, "Unexpected Node.Outputs.Value" );
 		}
 
@@ -205,8 +205,8 @@ namespace ArtificialNeuralNetworkTesting
 			Node testNode = new Node( 2, 1, ActivationFunction.Sigmoid, 0f );
 			testNode.Inputs[ 0 ] = new Terminal( null, testNode, 1.0f,  1f );
 			testNode.Inputs[ 1 ] = new Terminal( null, testNode, 0.5f, -1f );
-			Assert.AreEqual( 0.5f, testNode.GetWeightedSumOfInputValues(), 0.001, "Unexpected Node.GetWeightedSumOfInputValues()" );
-			float test = testNode.ComputeActivation( testNode.GetWeightedSumOfInputValues() );
+			Assert.AreEqual( 0.5f, testNode.GetSumOfWeightedInputValues(), 0.001, "Unexpected Node.GetWeightedSumOfInputValues()" );
+			float test = testNode.ComputeActivation( testNode.GetSumOfWeightedInputValues() );
 			Assert.AreEqual( 0.6225f, test, 0.001, "Unexpected Node.Outputs.Value" );
 		}
 
@@ -219,8 +219,8 @@ namespace ArtificialNeuralNetworkTesting
 			Node testNode = new Node( 2, 1, ActivationFunction.HyperbolicTangent, 0f );
 			testNode.Inputs[ 0 ] = new Terminal( null, testNode, 1.0f,  1f );
 			testNode.Inputs[ 1 ] = new Terminal( null, testNode, 0.5f, -1f );
-			Assert.AreEqual( 0.5f, testNode.GetWeightedSumOfInputValues(), 0.001, "Unexpected Node.GetWeightedSumOfInputValues()" );
-			float test = testNode.ComputeActivation( testNode.GetWeightedSumOfInputValues() );
+			Assert.AreEqual( 0.5f, testNode.GetSumOfWeightedInputValues(), 0.001, "Unexpected Node.GetWeightedSumOfInputValues()" );
+			float test = testNode.ComputeActivation( testNode.GetSumOfWeightedInputValues() );
 			Assert.AreEqual( 0.7311f, test, 0.001, "Unexpected Node.Outputs.Value" );
 		}
 
@@ -233,7 +233,23 @@ namespace ArtificialNeuralNetworkTesting
 			Node testNode = new Node( 2, 1, ActivationFunction.Sigmoid, 0.5f );
 			testNode.Outputs[ 0 ] = new Terminal( testNode, null, 0f, 1f );
 			testNode.SetOutputValues( 1f );
-			Assert.AreEqual( 1f, testNode.Outputs[ 0 ].Value, 0.001, "Unexpected Node.Outputs.Value" );
+			Assert.AreEqual( 1f, testNode.Outputs[ 0 ].Value, 0.001, "Unexpected Node.Outputs[ 0 ].Value" );
+		}
+
+		/// <summary>
+		/// AdjustInputWeights() correctly adjusts the weights of all input terminals given a training
+		/// step and a value for error at the output terminal.
+		/// </summary>
+		[TestMethod]
+		public void NodeAdjustInputWeights()
+		{
+			Node testNode = new Node( 2, 1, ActivationFunction.Sigmoid, 0.5f );
+			testNode.Inputs[ 0 ] = new Terminal( null, testNode, 0.1f, 0.1f );
+			testNode.Inputs[ 1 ] = new Terminal( null, testNode, 0.1f, 0.2f );
+			testNode.Outputs[ 0 ] = new Terminal( testNode, null, 0f, 1f );
+			testNode.AdjustInputWeights( 1f, 1f );
+			Assert.AreEqual( 0.2f, testNode.Inputs[ 0 ].Weight, 0.001, "Unexpected Node.Inputs[ 0 ].Weight" );
+			Assert.AreEqual( 0.3f, testNode.Inputs[ 1 ].Weight, 0.001, "Unexpected Node.Inputs[ 1 ].Weight" );
 		}
 
 		/// <summary>

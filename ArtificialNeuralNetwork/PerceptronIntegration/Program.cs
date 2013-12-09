@@ -7,9 +7,9 @@ namespace PerceptronIntegration
 	{
 		static void Main( string[] args )
 		{
-			Console.WriteLine( "==============================" );
-			Console.WriteLine( "Perceptron Colour Sorting Test" );
-			Console.WriteLine( "==============================" );
+			Console.WriteLine( "=======================================" );
+			Console.WriteLine( "Perceptron Red-Blue Colour Sorting Test" );
+			Console.WriteLine( "=======================================" );
 			Console.WriteLine();
 			Console.WriteLine( "=== Training Data ===" );
 			Console.WriteLine();
@@ -60,10 +60,10 @@ namespace PerceptronIntegration
 			testPerceptron.Inputs[ 2 ].MaxValue = 255f;
 
 			// Train the perceptron
-			testPerceptron.Train( trainingData, 0.1f, 0.1f, 0.2f, 0.2f );
+			testPerceptron.Train( trainingData, 0.1f, 0.1f, -0.2f, 0.2f );
 			
 			// Test some arbitrary input to verify the trained node can categorize colours correctly
-			int repetitions = 100;
+			int repetitions = 1000;
 			int correctCount = 0;
 			for ( int i = 0; i < repetitions; i++ )
 			{

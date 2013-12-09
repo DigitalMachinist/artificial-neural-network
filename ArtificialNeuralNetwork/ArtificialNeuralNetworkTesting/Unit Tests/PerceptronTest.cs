@@ -68,14 +68,14 @@ namespace ArtificialNeuralNetworkTesting
 		public void PerceptronConstructor0Arg()
 		{
 			Perceptron testPerceptron = new Perceptron();
-			Assert.AreSame( null, testPerceptron.Node, "Perceptron.Node unexpectedly null" );
-			Assert.AreSame( null, testPerceptron.Inputs, "Perceptron.Inputs unexpectedly null" );
-			Assert.AreSame( null, testPerceptron.Output, "Perceptron.Output unexpectedly null" );
+			Assert.AreSame( null, testPerceptron.Node, "Perceptron.Node unexpectedly non-null" );
+			Assert.AreSame( null, testPerceptron.Inputs, "Perceptron.Inputs unexpectedly non-null" );
+			Assert.AreSame( null, testPerceptron.Output, "Perceptron.Output unexpectedly non-null" );
 			Assert.AreEqual( false, testPerceptron.IsReady, "Unexpected Perceptron.IsReady" );
 		}
 
 		/// <summary>
-		/// Cycle() correctly configures the weights of the inputs given a set of training data.
+		/// Train() correctly configures the weights of the inputs given a set of training data.
 		/// </summary>
 		[TestMethod]
 		public void PerceptronTrain()
@@ -175,6 +175,8 @@ namespace ArtificialNeuralNetworkTesting
 			// Train the perceptron
 			testPerceptron.Train( trainingData, 0.1f, 0.1f, 0.5f, 0.5f );
 
+			Assert.Fail( "EXPECTED FAILURE (Intermittant behaviour expected)" );
+
 			// Test some arbitrary input to verify the trained node can categorize colours correctly
 			// Prefect Red (255, 0, 0)
 			testPerceptron.Inputs[ 0 ].Value = 255;
@@ -188,18 +190,18 @@ namespace ArtificialNeuralNetworkTesting
 			testPerceptron.Inputs[ 2 ].Value = 255;
 			testPerceptron.Cycle();
 			Assert.AreEqual( BLUE, testPerceptron.Output.Value, 0.001, "Unexpected Perceptron.Output.Value" );
-			//// Violet (101, 20, 165)
-			//testPerceptron.Inputs[ 0 ].Value = 101;
-			//testPerceptron.Inputs[ 1 ].Value =  20;
-			//testPerceptron.Inputs[ 2 ].Value = 165;
-			//testPerceptron.Cycle();
-			//Assert.AreEqual( BLUE, testPerceptron.Output.Value, 0.001, "Unexpected Perceptron.Output.Value" );
-			//// Leaf Green (80, 220, 45)
-			//testPerceptron.Inputs[ 0 ].Value =  80;
-			//testPerceptron.Inputs[ 1 ].Value = 220;
-			//testPerceptron.Inputs[ 2 ].Value =  45;
-			//testPerceptron.Cycle();
-			//Assert.AreEqual( RED, testPerceptron.Output.Value, 0.001, "Unexpected Perceptron.Output.Value" );
+			// Violet (101, 20, 165)
+			testPerceptron.Inputs[ 0 ].Value = 101;
+			testPerceptron.Inputs[ 1 ].Value =  20;
+			testPerceptron.Inputs[ 2 ].Value = 165;
+			testPerceptron.Cycle();
+			Assert.AreEqual( BLUE, testPerceptron.Output.Value, 0.001, "Unexpected Perceptron.Output.Value" );
+			// Leaf Green (80, 220, 45)
+			testPerceptron.Inputs[ 0 ].Value =  80;
+			testPerceptron.Inputs[ 1 ].Value = 220;
+			testPerceptron.Inputs[ 2 ].Value =  45;
+			testPerceptron.Cycle();
+			Assert.AreEqual( RED, testPerceptron.Output.Value, 0.001, "Unexpected Perceptron.Output.Value" );
 		}
 
 		/// <summary>
@@ -239,22 +241,6 @@ namespace ArtificialNeuralNetworkTesting
 			Perceptron testPerceptron = new Perceptron( 2, ActivationFunction.Sigmoid );
 			TrainingSet testTrainingSet = new TrainingSet( 1, 1 );
 			testPerceptron.CopyTrainingSetToInputs( testTrainingSet );
-		}
-
-		/// <summary>
-		/// AdjustNodeWeights() correctly adjusts the weights of the inputs based on the amount of error at output.
-		/// </summary>
-		[TestMethod]
-		public void PerceptronAdjustNodeWeights()
-		{
-			Perceptron testPerceptron = new Perceptron( 2, ActivationFunction.Sigmoid );
-			testPerceptron.Node.Inputs[ 0 ].Value  = 0.1f;
-			testPerceptron.Node.Inputs[ 0 ].Weight = 0.7f;
-			testPerceptron.Node.Inputs[ 1 ].Value  = 0.3f;
-			testPerceptron.Node.Inputs[ 1 ].Weight = 0.5f;
-			testPerceptron.AdjustNodeWeights( -2f, 0.1f );
-			Assert.AreEqual( 0.68f, testPerceptron.Node.Inputs[ 0 ].Weight, 0.001, "Unexpected Perceptron.Node.Inputs[ 0 ].Weight" );
-			Assert.AreEqual( 0.44f, testPerceptron.Node.Inputs[ 1 ].Weight, 0.001, "Unexpected Perceptron.Node.Inputs[ 1 ].Weight" );
 		}
 
 		/// <summary>
@@ -321,7 +307,7 @@ namespace ArtificialNeuralNetworkTesting
 		public void PerceptronGetTrainingEpochs()
 		{
 			Perceptron testPerceptron = new Perceptron( 2, ActivationFunction.Sigmoid );
-			Assert.AreNotSame( 0, testPerceptron.TrainingEpochs, "Unexpected Perceptron.TrainingEpochs" );
+			Assert.AreEqual( 0, testPerceptron.TrainingEpochs, "Unexpected Perceptron.TrainingEpochs" );
 		}
 
 		/// <summary>
@@ -331,7 +317,7 @@ namespace ArtificialNeuralNetworkTesting
 		public void PerceptronGetTrainingMeanSquaredError()
 		{
 			Perceptron testPerceptron = new Perceptron( 2, ActivationFunction.Sigmoid );
-			Assert.AreEqual( 0, testPerceptron.TrainingMeanSquaredError, "Unexpected Perceptron.TrainingMeanSquaredError" );
+			Assert.AreEqual( 0, testPerceptron.TrainingMeanSquaredError, 0.001, "Unexpected Perceptron.TrainingMeanSquaredError" );
 		}
 
 		/// <summary>

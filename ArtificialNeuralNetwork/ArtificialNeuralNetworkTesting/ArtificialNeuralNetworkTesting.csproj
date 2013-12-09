@@ -57,6 +57,7 @@
     <Compile Include="Unit Tests\TrainingSetTest.cs" />
     <Compile Include="Unit Tests\NodeTest.cs" />
     <Compile Include="Unit Tests\PerceptronTest.cs" />
+    <Compile Include="Unit Tests\MLPTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ArtificialNeuralNetwork\ArtificialNeuralNetwork.csproj">
